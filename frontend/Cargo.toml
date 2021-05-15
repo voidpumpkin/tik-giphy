@@ -1,0 +1,25 @@
+[package]
+name = "frontend"
+version = "0.1.0"
+authors = ["Julius Lungys <32368314+voidpumpkin@users.noreply.github.com>"]
+edition = "2018"
+
+[package.metadata.commands]
+dev = "cargo watch -- cargo cmd build-and-start"
+build-and-start = "cargo cmd build && cargo cmd start "
+build = "wasm-pack build --target web --out-name wasm --out-dir ./static/build"
+start = "miniserve ./static --index index.html"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+## binary cargo dependencies:
+# cargo-cmd
+# wasm-pack
+
+## dev binary cargo dependencies:
+# cargo-watch
+
+[dependencies]
+yew = { git = "https://github.com/yewstack/yew.git", branch = "v0.18" }
+wasm-bindgen = "0.2.74"

@@ -1,0 +1,16 @@
+body {
+  height: 100vh;
+  margin: 0 auto;
+  width: min(50vh, 100%);
+  background-color: black;
+}
+.gifSlider {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gif {
+  max-width: 100%;
+}
