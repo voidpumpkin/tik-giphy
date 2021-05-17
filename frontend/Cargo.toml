@@ -21,5 +21,7 @@ crate-type = ["cdylib", "rlib"]
 # cargo-watch
 
 [dependencies]
-yew = { git = "https://github.com/yewstack/yew.git", branch = "v0.18" }
+yew = "0.18"
 wasm-bindgen = "0.2.74"
+anyhow = "1.0.40"
+serde = "1.0.126"

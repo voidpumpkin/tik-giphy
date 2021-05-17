@@ -3,8 +3,11 @@ body {
   margin: 0 auto;
   width: min(50vh, 100%);
   background-color: black;
+  position: relative;
+
+  font-family: "Kotta One", serif;
 }
-.gifSlider {
+.gifContainer {
   height: 100%;
   width: 100%;
   display: flex;
@@ -12,5 +15,108 @@ body {
   justify-content: center;
 }
 .gif {
-  max-width: 100%;
+  width: 100%;
+}
+.ui {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+}
+
+h1 {
+  color: hsl(0, 0%, 85%);
+  text-shadow: -0.05em 0.03em hsl(271, 76%, 45%);
+  margin: 0.5em;
+}
+.buttons {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+}
+.prevButton {
+  height: 100%;
+  width: 35%;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+}
+.prevButton:focus {
+  outline: none;
+}
+.prevButton:hover {
+  animation: prevHover 0.2s;
+  animation-fill-mode: forwards;
+}
+.prevButton:active {
+  animation: prevClick 0.1s;
+  animation-fill-mode: forwards;
+}
+@keyframes prevHover {
+  0% {
+    background-image: linear-gradient(0.75turn, #0000, rgba(0, 0, 0, 0.25));
+  }
+  50% {
+    background-image: linear-gradient(0.75turn, #0000, rgba(0, 0, 0, 0.5));
+  }
+  100% {
+    background-image: linear-gradient(0.75turn, #0000, rgba(0, 0, 0, 0.5));
+  }
+}
+@keyframes prevClick {
+  0% {
+    background-image: linear-gradient(0.75turn, #0000, rgba(0, 0, 0, 0.5));
+  }
+  50% {
+    background-image: linear-gradient(0.75turn, #0000, rgba(0, 0, 0, 0.75));
+  }
+  100% {
+    background-image: linear-gradient(0.75turn, #0000, rgba(0, 0, 0, 1));
+  }
+}
+.nextButton {
+  height: 100%;
+  width: 35%;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  margin-left: auto;
+}
+.nextButton:focus {
+  outline: none;
+}
+.nextButton:hover {
+  animation: nextHover 0.2s;
+  animation-fill-mode: forwards;
+}
+.nextButton:active {
+  animation: mextClick 0.1s;
+  animation-fill-mode: forwards;
+}
+@keyframes nextHover {
+  0% {
+    background-image: linear-gradient(0.25turn, #0000, rgba(0, 0, 0, 0.25));
+  }
+  50% {
+    background-image: linear-gradient(0.25turn, #0000, rgba(0, 0, 0, 0.5));
+  }
+  100% {
+    background-image: linear-gradient(0.25turn, #0000, rgba(0, 0, 0, 0.5));
+  }
+}
+@keyframes mextClick {
+  0% {
+    background-image: linear-gradient(0.25turn, #0000, rgba(0, 0, 0, 0.5));
+  }
+  50% {
+    background-image: linear-gradient(0.25turn, #0000, rgba(0, 0, 0, 0.75));
+  }
+  100% {
+    background-image: linear-gradient(0.25turn, #0000, rgba(0, 0, 0, 1));
+  }
 }
