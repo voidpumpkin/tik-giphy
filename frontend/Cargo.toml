@@ -10,7 +10,7 @@ dev = "cargo watch -- cargo cmd build-dev-and-start"
 build = "cargo cmd wasm-build-profiless -- --release"
 # These commands are not meant to be used directly
 build-dev-and-start = "cargo cmd wasm-build-profiless -- --dev && cargo cmd start"
-wasm-build-profiless = "cargo cmd pre-wasm-build && wasm-pack build --target web --out-name index --out-dir ./build"
+wasm-build-profiless = "cargo cmd pre-wasm-build && wasm-pack build --target web --out-name index --out-dir ./build --no-typescript"
 pre-wasm-build = "rm -fr build && mkdir build && cp static/* build"
 
 [lib]
