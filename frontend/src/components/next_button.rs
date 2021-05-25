@@ -42,8 +42,7 @@ impl Component for NextButton {
     }
 
     fn view(&self) -> Html {
-        {
-            if self.props.gif_index != self.props.gifs_len - 1 {
+        if self.props.gif_index < self.props.gifs_len {
                 html! {
                     <button class="nextButton" type="button" onclick=self.link.callback(|_| Msg::Clicked) />
                 }
@@ -52,4 +51,3 @@ impl Component for NextButton {
             }
         }
     }
-}

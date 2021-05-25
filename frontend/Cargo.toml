@@ -5,10 +5,13 @@ authors = ["Julius Lungys <32368314+voidpumpkin@users.noreply.github.com>"]
 edition = "2018"
 
 [package.metadata.commands]
-dev = "cargo watch -- cargo cmd build-and-start"
-build-and-start = "cargo cmd build && cargo cmd start "
-build = "wasm-pack build --target web --out-name wasm --out-dir ./static/build"
-start = "miniserve ./static --index index.html"
+start = "miniserve ./build --index index.html"
+dev = "cargo watch -- cargo cmd build-dev-and-start"
+build = "cargo cmd wasm-build-profiless -- --release"
+# These commands are not meant to be used directly
+build-dev-and-start = "cargo cmd wasm-build-profiless -- --dev && cargo cmd start"
+wasm-build-profiless = "cargo cmd pre-wasm-build && wasm-pack build --target web --out-name index --out-dir ./build"
+pre-wasm-build = "rm -fr build && mkdir build && cp static/* build"
 
 [lib]
 crate-type = ["cdylib", "rlib"]
