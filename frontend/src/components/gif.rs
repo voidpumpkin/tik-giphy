@@ -1,10 +1,11 @@
 use yew::prelude::*;
 
+#[derive(Debug)]
 pub struct Gif {
     props: Props,
 }
 
-#[derive(Properties, Clone, PartialEq)]
+#[derive(Properties, Clone, PartialEq, Debug)]
 pub struct Props {
     pub gif_index: usize,
     pub gifs: Vec<String>,

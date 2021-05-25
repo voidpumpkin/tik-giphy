@@ -2,12 +2,13 @@ use yew::prelude::*;
 
 use crate::components::{next_button::NextButton, prev_button::PrevButton};
 
+#[derive(Debug)]
 pub struct Ui {
     props: Props,
     link: ComponentLink<Self>,
 }
 
-#[derive(Properties, Clone, PartialEq)]
+#[derive(Properties, Clone, PartialEq, Debug)]
 pub struct Props {
     pub gif_index: usize,
     pub gifs_len: usize,

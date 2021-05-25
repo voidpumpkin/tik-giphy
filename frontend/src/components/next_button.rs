@@ -1,6 +1,6 @@
 use yew::prelude::*;
 
-#[derive(Properties, Clone, PartialEq)]
+#[derive(Properties, Clone, PartialEq, Debug)]
 pub struct Props {
     pub gif_index: usize,
     pub gifs_len: usize,
@@ -10,6 +10,7 @@ pub struct Props {
 pub enum Msg {
     Clicked,
 }
+#[derive(Debug)]
 pub struct NextButton {
     props: Props,
     link: ComponentLink<Self>,
@@ -43,11 +44,11 @@ impl Component for NextButton {
 
     fn view(&self) -> Html {
         if self.props.gif_index < self.props.gifs_len {
-                html! {
-                    <button class="nextButton" type="button" onclick=self.link.callback(|_| Msg::Clicked) />
-                }
-            } else {
-                html! {}
+            html! {
+                <button class="nextButton" type="button" onclick=self.link.callback(|_| Msg::Clicked) />
             }
+        } else {
+            html! {}
         }
     }
+}

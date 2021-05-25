@@ -11,13 +11,13 @@ use yew::{
     },
 };
 
+#[derive(Debug)]
 pub struct App {
     link: ComponentLink<Self>,
     fetch_task: Option<FetchTask>,
     gifs: Vec<String>,
     gif_index: usize,
 }
-
 pub enum Msg {
     SetGifIndex(usize),
     ReceiveGifsResponse(Result<GifsResponse, anyhow::Error>),
