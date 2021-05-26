@@ -5,12 +5,11 @@ authors = ["Julius Lungys <32368314+voidpumpkin@users.noreply.github.com>"]
 edition = "2018"
 
 [package.metadata.commands]
-start = "miniserve ./build --index index.html"
-dev = "cargo watch -- cargo cmd build-dev-and-start"
-build = "cargo cmd wasm-build-profiless -- --release"
+dev = "cargo watch -- docker-compose -f ../docker-compose.yml -f ../docker-compose.override.yml up -V --build frontend"
 # These commands are not meant to be used directly
-build-dev-and-start = "cargo cmd wasm-build-profiless -- --dev && cargo cmd start"
-wasm-build-profiless = "cargo cmd pre-wasm-build && wasm-pack build --target web --out-name index --out-dir ./build --no-typescript"
+serve = "miniserve ./build --index index.html"
+build-and-serve = "cargo cmd build -- --$WASM_PROFILE && cargo cmd serve"
+build = "cargo cmd pre-wasm-build && wasm-pack build --target web --out-name index --out-dir ./build --no-typescript"
 pre-wasm-build = "rm -fr build && mkdir build && cp static/* build"
 
 [lib]
@@ -19,6 +18,7 @@ crate-type = ["cdylib", "rlib"]
 ## binary cargo dependencies:
 # cargo-cmd
 # wasm-pack
+# miniserve
 
 ## dev binary cargo dependencies:
 # cargo-watch

@@ -1,15 +1,25 @@
 version: "3"
+x-env_vars: &rust_env_vars
+  environment:
+    RUST_LOG: ${RUST_LOG}
+    RUST_BACKTRACE: ${RUST_BACKTRACE}
 services:
+  frontend:
+    build: ./frontend
+    <<: *rust_env_vars
+    tty: true
+    container_name: tg_frontend
+  backend:
+    build: ./backend
+    <<: *rust_env_vars
+    environment:
+      BACKEND_HOST: ${BACKEND_HOST:-"0.0.0.0:8081"}
+    depends_on:
+      - database
+    tty: true
+    container_name: tg_backend
   database:
     image: "postgres"
-    environment:
-      POSTGRES_USER: tguser
-      POSTGRES_PASSWORD: tgpassword
-      POSTGRES_DB: tgdb
-    volumes:
-      - db:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     container_name: tg_database
-volumes:
-  db:

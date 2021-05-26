@@ -1,11 +1,11 @@
-🥾🔼
+🥾🔼 dev
 
 ```bash
-docker-compose -p tik-giphy up
+docker-compose up
 ```
 
-🧹
+🥾🔼 prod
 
 ```bash
-docker-compose -p tik-giphy down --rmi local
+docker-compose -f docker-compose.yml -f docker-compose.prod.yml up
 ```
