@@ -19,7 +19,7 @@ services:
     tty: true
     container_name: tg_backend
   database:
-    image: "postgres"
+    image: "postgres:13.3"
     ports:
       - "5432:5432"
     container_name: tg_database
