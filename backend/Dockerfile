@@ -1,5 +1,7 @@
 FROM rust:1.52.1
 
+RUN cargo install diesel_cli --no-default-features  --features postgres
+
 WORKDIR /usr/src/app
 
 VOLUME /usr/local/cargo

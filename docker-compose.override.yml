@@ -13,10 +13,6 @@ services:
       - ./backend:/usr/src/app
       - becargo:/usr/local/cargo
   database:
-    environment:
-      POSTGRES_USER: tguser
-      POSTGRES_PASSWORD: tgpassword
-      POSTGRES_DB: tgdb
     volumes:
       - db:/var/lib/postgresql/data
 volumes:

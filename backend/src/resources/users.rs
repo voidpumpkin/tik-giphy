@@ -1,4 +1,7 @@
+use crate::models;
+use crate::DbPool;
 use actix_web::{get, post, web, HttpResponse, Responder, Scope};
+use diesel::RunQueryDsl;
 
 pub fn users() -> Scope {
     web::scope("/users")
@@ -8,8 +11,25 @@ pub fn users() -> Scope {
 }
 
 #[get("/")]
-async fn get_users() -> impl Responder {
-    HttpResponse::Ok().body("I am a user")
+async fn get_users(pool: web::Data<DbPool>) -> impl Responder {
+    let db = pool.get().expect("couldn't get db connection from pool");
+
+    let users_result = web::block(
+        move || -> Result<Vec<models::User>, diesel::result::Error> {
+            use crate::schema::users::dsl::*;
+            let user = users.load::<models::User>(&db)?;
+            Ok(user)
+        },
+    )
+    .await;
+
+    match users_result {
+        Ok(users) => HttpResponse::Ok().json(users),
+        Err(err) => {
+            eprint!("{}", err);
+            HttpResponse::InternalServerError().finish()
+        }
+    }
 }
 
 #[get("/me")]
