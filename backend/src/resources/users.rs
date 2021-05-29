@@ -1,6 +1,6 @@
 use crate::{
     models,
-    utils::{ErrorResponseBody, JsonApiError, SuccessfulResponseBody},
+    utils::{auth, ErrorResponseBody, JsonApiError, SuccessfulResponseBody},
     DbPool,
 };
 use actix_threadpool::BlockingError;
@@ -80,11 +80,17 @@ async fn post_user(
         _ => {}
     }
 
+    let password = match auth::hash(&req_body.0.password) {
+        Ok(val) => val,
+        Err(err) => {
+            eprint!("{}", err);
+            return HttpResponse::InternalServerError().finish();
+        }
+    };
+
     let new_user = match req_body.0 {
         PostUserReqBody {
-            username,
-            email,
-            password,
+            username, email, ..
         } => models::UserForm {
             username,
             email,

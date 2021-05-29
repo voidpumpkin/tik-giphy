@@ -18,6 +18,7 @@ diesel = "docker exec -i -it tg_backend diesel"
 [dependencies]
 actix-threadpool = "0.3.3"
 actix-web = "3.3.2"
+bcrypt = "0.9.0"
 diesel = { version = "1.4.6", features = ["postgres", "r2d2", "uuidv07"] }
 env_logger = "0.8.3"
 r2d2 = "0.8.9"

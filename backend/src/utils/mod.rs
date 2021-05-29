@@ -1,3 +1,4 @@
+pub mod auth;
 mod json_api_error;
 mod response_bodies;
 
