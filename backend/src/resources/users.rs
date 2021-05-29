@@ -11,6 +11,7 @@ use diesel::{
     RunQueryDsl,
 };
 use serde::Deserialize;
+use validator::Validate;
 
 pub fn users() -> Scope {
     web::scope("/users").service(get_users).service(post_user)
@@ -38,10 +39,16 @@ async fn get_users(pool: web::Data<DbPool>) -> impl Responder {
     }
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Validate)]
 struct PostUserReqBody {
+    #[validate(length(min = 1, message = "Username too short"))]
     username: String,
+    #[validate(
+        length(min = 1, message = "Email too short"),
+        email(message = "Email incorrect format")
+    )]
     email: String,
+    #[validate(length(min = 1, message = "Password too short"))]
     password: String,
 }
 
@@ -51,6 +58,27 @@ async fn post_user(
     req_body: web::Json<PostUserReqBody>,
 ) -> impl Responder {
     let db = pool.get().expect("couldn't get db connection from pool");
+
+    match req_body.validate() {
+        Err(errs) => {
+            let errors: Vec<JsonApiError> = errs
+                .field_errors()
+                .iter()
+                .map(|field_err| {
+                    field_err.1.iter().map(|validation_err| {
+                        let title = match validation_err.clone().message {
+                            Some(message) => message.to_string(),
+                            None => format!("{}", validation_err),
+                        };
+                        JsonApiError { title }
+                    })
+                })
+                .flatten()
+                .collect();
+            return HttpResponse::BadRequest().json(ErrorResponseBody { errors });
+        }
+        _ => {}
+    }
 
     let new_user = match req_body.0 {
         PostUserReqBody {
