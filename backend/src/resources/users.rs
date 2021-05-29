@@ -1,5 +1,4 @@
-use crate::models;
-use crate::DbPool;
+use crate::{models, utils::SuccessfulResponseBody, DbPool};
 use actix_web::{get, post, web, HttpResponse, Responder, Scope};
 use diesel::RunQueryDsl;
 
@@ -24,7 +23,7 @@ async fn get_users(pool: web::Data<DbPool>) -> impl Responder {
     .await;
 
     match users_result {
-        Ok(users) => HttpResponse::Ok().json(users),
+        Ok(users) => HttpResponse::Ok().json(SuccessfulResponseBody { data: users }),
         Err(err) => {
             eprint!("{}", err);
             HttpResponse::InternalServerError().finish()
