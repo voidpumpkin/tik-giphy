@@ -1,15 +1,8 @@
-#[macro_use]
-extern crate diesel;
-
-use actix_web::{middleware::Logger, App, HttpServer};
+use actix_web::HttpServer;
 use diesel::{pg::PgConnection, r2d2::ConnectionManager};
 use std::env;
 
-pub mod models;
-mod resources;
-pub mod schema;
-
-pub type DbPool = r2d2::Pool<ConnectionManager<PgConnection>>;
+use backend::create_app;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -23,13 +16,13 @@ async fn main() -> std::io::Result<()> {
         .build(manager)
         .expect("Could not build connection pool");
 
-    HttpServer::new(move || {
-        App::new()
-            .data(pool.clone())
-            .wrap(Logger::default())
-            .service(resources::users())
-    })
-    .bind(host)?
-    .run()
-    .await
+    #[cfg(not(debug_assertions))]
+    {
+        backend::run_migrations(pool.clone());
+    }
+
+    HttpServer::new(move || create_app!(pool.clone()))
+        .bind(host)?
+        .run()
+        .await
 }

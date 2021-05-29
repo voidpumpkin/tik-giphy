@@ -6,7 +6,8 @@ edition = "2018"
 
 [package.metadata.commands]
 dev = "cargo watch -- docker-compose -f ../docker-compose.yml -f ../docker-compose.override.yml up -V --build backend"
-diesel = "docker exec -i -it tg_backend diesel"
+diesel = "docker exec -t tg_backend diesel"
+test = "docker exec --env-file ../.env -it tg_backend cargo test"
 
 ## binary cargo dependencies:
 # cargo-cmd
@@ -18,7 +19,11 @@ diesel = "docker exec -i -it tg_backend diesel"
 [dependencies]
 actix-web = "3.3.2"
 diesel = { version = "1.4.6", features = ["postgres", "r2d2", "uuidv07"] }
+diesel_migrations = "1.4.0"
 env_logger = "0.8.3"
 r2d2 = "0.8.9"
 serde = { version = "1.0.126", features = ["derive"] }
 uuid = { version = "0.8.2", features = ["serde", "v4"] }
+
+[dev-dependencies]
+actix-rt = "2.2.0"
