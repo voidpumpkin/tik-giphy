@@ -1,7 +1,10 @@
 #[macro_use]
 extern crate diesel;
 
-use actix_web::{middleware::Logger, App, HttpServer};
+use actix_web::{
+    middleware::{Logger, NormalizePath},
+    App, HttpServer,
+};
 use diesel::{pg::PgConnection, r2d2::ConnectionManager};
 use std::env;
 
@@ -27,6 +30,7 @@ async fn main() -> std::io::Result<()> {
         App::new()
             .data(pool.clone())
             .wrap(Logger::default())
+            .wrap(NormalizePath::default())
             .service(resources::users())
     })
     .bind(host)?
