@@ -1,3 +1,5 @@
-mod successful_response_body;
+mod json_api_error;
+mod response_bodies;
 
-pub use successful_response_body::SuccessfulResponseBody;
+pub use json_api_error::JsonApiError;
+pub use response_bodies::{ErrorResponseBody, SuccessfulResponseBody};
