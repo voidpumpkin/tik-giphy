@@ -32,6 +32,7 @@ async fn main() -> std::io::Result<()> {
             .data(pool.clone())
             .wrap(Logger::default())
             .wrap(NormalizePath::default())
+            .service(resources::auth())
             .service(resources::users())
     })
     .bind(host)?

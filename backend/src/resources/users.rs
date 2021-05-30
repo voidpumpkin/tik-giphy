@@ -1,6 +1,6 @@
 use crate::{
     models,
-    utils::{auth, ErrorResponseBody, JsonApiError, SuccessfulResponseBody},
+    utils::{auth, ErrorResBody, JsonApiError, SuccessfulResBody},
     DbPool,
 };
 use actix_threadpool::BlockingError;
@@ -31,7 +31,7 @@ async fn get_users(pool: web::Data<DbPool>) -> impl Responder {
     .await;
 
     match users_result {
-        Ok(users) => HttpResponse::Ok().json(SuccessfulResponseBody { data: users }),
+        Ok(users) => HttpResponse::Ok().json(SuccessfulResBody { data: users }),
         Err(err) => {
             eprint!("{}", err);
             HttpResponse::InternalServerError().finish()
@@ -75,7 +75,7 @@ async fn post_user(
                 })
                 .flatten()
                 .collect();
-            return HttpResponse::BadRequest().json(ErrorResponseBody { errors });
+            return HttpResponse::BadRequest().json(ErrorResBody { errors });
         }
         _ => {}
     }
@@ -122,7 +122,7 @@ async fn post_user(
                         title = "Specified email already exists".into();
                     }
                     let errors = vec![JsonApiError { title }];
-                    HttpResponse::Conflict().json(ErrorResponseBody { errors })
+                    HttpResponse::Conflict().json(ErrorResBody { errors })
                 }
                 _ => HttpResponse::InternalServerError().finish(),
             }
