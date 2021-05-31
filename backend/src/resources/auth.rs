@@ -1,7 +1,6 @@
 use crate::{
     models,
-    utils::{auth, ErrorResBody, JsonApiError, SuccessfulResBody},
-    DbPool,
+    utils::{auth, DbPool, ErrorResBody, JsonApiError, SuccessfulResBody},
 };
 use actix_web::{post, web, HttpResponse, Responder};
 use diesel::{result::QueryResult, ExpressionMethods, QueryDsl, RunQueryDsl};

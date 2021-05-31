@@ -21,8 +21,6 @@ mod resources;
 pub mod schema;
 pub mod utils;
 
-pub type DbPool = r2d2::Pool<ConnectionManager<PgConnection>>;
-
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     env_logger::init_from_env(env_logger::Env::new().default_filter_or("INFO"));

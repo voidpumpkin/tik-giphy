@@ -1,7 +1,6 @@
 use crate::{
     models,
-    utils::{auth, ErrorResBody, JsonApiError, SuccessfulResBody},
-    DbPool,
+    utils::{auth, DbPool, ErrorResBody, JsonApiError, SuccessfulResBody},
 };
 use actix_threadpool::BlockingError;
 use actix_web::{get, post, web, HttpResponse, Responder};
