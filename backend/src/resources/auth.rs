@@ -3,15 +3,11 @@ use crate::{
     utils::{auth, ErrorResBody, JsonApiError, SuccessfulResBody},
     DbPool,
 };
-use actix_web::{post, web, HttpResponse, Responder, Scope};
+use actix_web::{post, web, HttpResponse, Responder};
 use diesel::{result::QueryResult, ExpressionMethods, QueryDsl, RunQueryDsl};
 use serde::Deserialize;
 use serde_json::json;
 use validator::Validate;
-
-pub fn auth() -> Scope {
-    web::scope("/auth").service(login)
-}
 
 #[derive(Deserialize, Validate)]
 struct LoginReqBody {

@@ -4,7 +4,7 @@ use crate::{
     DbPool,
 };
 use actix_threadpool::BlockingError;
-use actix_web::{get, post, web, HttpResponse, Responder, Scope};
+use actix_web::{get, post, web, HttpResponse, Responder};
 use actix_web_grants::proc_macro::has_permissions;
 use diesel::{
     insert_into,
@@ -14,13 +14,9 @@ use diesel::{
 use serde::Deserialize;
 use validator::Validate;
 
-pub fn users() -> Scope {
-    web::scope("/users").service(get_users).service(post_user)
-}
-
 #[get("/")]
 #[has_permissions("BASIC")]
-async fn get_users(pool: web::Data<DbPool>) -> impl Responder {
+pub async fn get_users(pool: web::Data<DbPool>) -> impl Responder {
     let db = pool.get().expect("couldn't get db connection from pool");
 
     let users_result = web::block(
@@ -42,7 +38,7 @@ async fn get_users(pool: web::Data<DbPool>) -> impl Responder {
 }
 
 #[derive(Deserialize, Validate)]
-struct PostUserReqBody {
+pub struct PostUserReqBody {
     #[validate(length(min = 1, message = "Username too short"))]
     username: String,
     #[validate(
@@ -55,7 +51,7 @@ struct PostUserReqBody {
 }
 
 #[post("/")]
-async fn post_user(
+pub async fn post_user(
     pool: web::Data<DbPool>,
     req_body: web::Json<PostUserReqBody>,
 ) -> impl Responder {

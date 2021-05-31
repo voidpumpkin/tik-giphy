@@ -9,12 +9,12 @@ embed_migrations!();
 
 use actix_web::{
     middleware::{Logger, NormalizePath},
-    web, App, HttpServer,
+    App, HttpServer,
 };
-use actix_web_httpauth::middleware::HttpAuthentication;
 use diesel::{pg::PgConnection, r2d2::ConnectionManager};
 use std::env;
 
+mod config;
 mod middlewares;
 pub mod models;
 mod resources;
@@ -43,12 +43,7 @@ async fn main() -> std::io::Result<()> {
             .data(pool.clone())
             .wrap(Logger::default())
             .wrap(NormalizePath::default())
-            .service(resources::auth())
-            .service(
-                web::scope("")
-                    .wrap(HttpAuthentication::bearer(middlewares::validator))
-                    .service(resources::users()),
-            )
+            .service(services_config!())
     })
     .bind(host)?
     .run()

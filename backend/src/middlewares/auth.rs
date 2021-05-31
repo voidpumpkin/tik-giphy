@@ -12,3 +12,14 @@ pub async fn validator(
     }
     Ok(req)
 }
+
+#[macro_export]
+macro_rules! auth_middleware {
+    () => {{
+        use crate::middlewares;
+        use actix_web::web;
+        use actix_web_httpauth::middleware::HttpAuthentication;
+
+        web::scope("").wrap(HttpAuthentication::bearer(middlewares::validator))
+    }};
+}
