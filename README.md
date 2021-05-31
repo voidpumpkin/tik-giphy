@@ -4,6 +4,12 @@ Web app for browsing giphy trending gifs.
 
 Backend portion of this is a homework task for UAB Nikulipe
 
+## If you have insomnia api
+
+There is an openapi spec, pre-defined requests and tests for them all.
+
+Just clone this repo inside the insomnia app.
+
 ## Running this app
 
 ### Release/Prod
