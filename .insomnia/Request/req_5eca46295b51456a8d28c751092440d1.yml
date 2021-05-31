@@ -1,0 +1,24 @@
+_id: req_5eca46295b51456a8d28c751092440d1
+type: Request
+parentId: fld_4f84c543458649819e6b468e4a761e14
+modified: 1622420316194
+created: 1622408995590
+url: "{{ base_url }}/users"
+name: token expired
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication:
+  type: bearer
+  token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjI0MTU4MDgsImV4cCI6MTYyMjQxNTkyOCwic3ViIjoiMWZkNWVlZTgtY2IwOC00NDIzLWFiZmItNDIxNmFkNjk1YTU3IiwicGVybWlzc2lvbnMiOlsiQkFTSUMiXX0.NTXjla4YdN0JG54QjuBeSNeSLrHmqBlhm_RCUrJVGu0
+  prefix: Bearer
+metaSortKey: -1622287053894
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

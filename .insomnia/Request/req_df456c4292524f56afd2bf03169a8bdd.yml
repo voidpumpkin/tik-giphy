@@ -1,0 +1,24 @@
+_id: req_df456c4292524f56afd2bf03169a8bdd
+type: Request
+parentId: fld_4f84c543458649819e6b468e4a761e14
+modified: 1622418645697
+created: 1622409012794
+url: "{{ base_url }}/users"
+name: bad token
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication:
+  type: bearer
+  token: Bobby
+  prefix: Bearer
+metaSortKey: -1622286696840
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

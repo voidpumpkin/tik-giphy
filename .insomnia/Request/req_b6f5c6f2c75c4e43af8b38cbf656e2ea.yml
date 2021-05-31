@@ -1,0 +1,30 @@
+_id: req_b6f5c6f2c75c4e43af8b38cbf656e2ea
+type: Request
+parentId: fld_21abb7afc8d54b29a0418fc19b76fd25
+modified: 1622386670221
+created: 1622386658978
+url: "{{ base_url }}/auth/login"
+name: error empty password
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+      "email": "user@example.com",
+      "password": ""
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+    id: pair_df9841be389a4942bc6cfd0293dcd59b
+authentication: {}
+metaSortKey: -1622349493344.8125
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

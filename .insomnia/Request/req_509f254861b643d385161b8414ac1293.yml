@@ -1,0 +1,31 @@
+_id: req_509f254861b643d385161b8414ac1293
+type: Request
+parentId: fld_78a1eb79695c4abb8db4a8bd473be44e
+modified: 1622386599121
+created: 1622300497668
+url: "{{ base_url }}/users"
+name: error empty username
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"username": "",
+    	"password": "nnn",
+    	"email": "bobzzz@tester.com"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+    id: pair_2994119fc4eb493da59c3c5b8ddc4681
+authentication: {}
+metaSortKey: -1622337194394.75
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

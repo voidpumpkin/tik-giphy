@@ -1,0 +1,22 @@
+_id: env_9b4ff05e328f475c95697998523446d4
+type: Environment
+parentId: env_b66dcea3b631d10076db6cf8abea68a3bbf27e36
+modified: 1622420083157
+created: 1622287806452
+name: TikGiphy local
+data:
+  scheme: http
+  base_path: ""
+  host: localhost:8081
+  nevertoken: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjI0MTM2MjYsImV4cCI6MTYyMzYyMzIyNiwic3ViIjoiMWZkNWVlZTgtY2IwOC00NDIzLWFiZmItNDIxNmFkNjk1YTU3IiwicGVybWlzc2lvbnMiOlsiQkFTSUMiXX0.iiyHRrNxS3Dccc8YqYKm51cJRp__cpZTmYwc2q9XlpU
+  badrole_nevertoken: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjI0MjAwNjksImV4cCI6MTc3Nzk0MDA2OSwic3ViIjoiMWZkNWVlZTgtY2IwOC00NDIzLWFiZmItNDIxNmFkNjk1YTU3IiwicGVybWlzc2lvbnMiOlsiYm9iIl19.eBdr_yyZkuDU4DNWAqBhEn_zaDlc1750-AcNFz1n9PY
+dataPropertyOrder:
+  "&":
+    - scheme
+    - base_path
+    - host
+    - nevertoken
+    - badrole_nevertoken
+color: "#253298"
+isPrivate: false
+metaSortKey: 1622287806452

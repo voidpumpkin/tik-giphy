@@ -1,0 +1,13 @@
+_id: ut_c9834fc3c81e4fe1b5802db64380269a
+type: UnitTest
+parentId: uts_33b4ada2697d41beb97a1cf6d3689d07
+modified: 1622305916305
+created: 1622299027608
+requestId: req_c25002537fbb4b3eae6b4affceb046c8
+name: Returns 409
+code: |-
+  const response = await insomnia.send();
+  const body = JSON.parse(response.data);
+
+  expect(response.status).to.equal(409);
+  expect(body.errors[0].title).to.equal("Specified email already exists");

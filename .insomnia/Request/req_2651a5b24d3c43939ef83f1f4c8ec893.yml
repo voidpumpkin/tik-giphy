@@ -1,0 +1,30 @@
+_id: req_2651a5b24d3c43939ef83f1f4c8ec893
+type: Request
+parentId: fld_21abb7afc8d54b29a0418fc19b76fd25
+modified: 1622386709949
+created: 1622386704094
+url: "{{ base_url }}/auth/login"
+name: error not found email
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+      "email": "user@example.com",
+      "password": "string"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+    id: pair_df9841be389a4942bc6cfd0293dcd59b
+authentication: {}
+metaSortKey: -1622343343944.7812
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

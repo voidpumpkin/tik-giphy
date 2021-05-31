@@ -1,0 +1,24 @@
+_id: req_466846ad7a8741658907f96a789eab75
+type: Request
+parentId: fld_4f84c543458649819e6b468e4a761e14
+modified: 1622420118410
+created: 1622418585311
+url: "{{ base_url }}/users"
+name: bad role
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication:
+  type: bearer
+  token: "{{ _.badrole_nevertoken }}"
+  prefix: Bearer
+metaSortKey: -1622286518313
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

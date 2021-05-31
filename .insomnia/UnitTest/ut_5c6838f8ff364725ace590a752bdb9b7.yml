@@ -1,0 +1,20 @@
+_id: ut_5c6838f8ff364725ace590a752bdb9b7
+type: UnitTest
+parentId: uts_b9ea503e947e45f4ad589912e27e42df
+modified: 1622298248199
+created: 1622290154252
+requestId: req_wrk_1c5804cfe6b045949433702a171bcdcddfe076dc
+name: Gets users
+code: |-
+  const response = await insomnia.send();
+  const body = JSON.parse(response.data);
+
+  expect(body.data.length).to.be.at.least(2);
+  expect(body.data[0].id).to.be.ok;
+  expect(body.data[1].id).to.be.ok;
+  expect(body.data[0].username).to.equal("tester");
+  expect(body.data[1].username).to.equal("bob");
+  expect(body.data[0].email).to.equal("tester@tester.com");
+  expect(body.data[1].email).to.equal("bob@tester.com");
+  expect(body.data[0].password).to.be.ok;
+  expect(body.data[1].password).to.be.ok;

@@ -1,0 +1,31 @@
+_id: req_7dc63f724f91439abe6f84ba1a1233a6
+type: Request
+parentId: fld_78a1eb79695c4abb8db4a8bd473be44e
+modified: 1622386608857
+created: 1622301837054
+url: "{{ base_url }}/users"
+name: error bad email
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"username": "cccccc",
+    	"password": "nnn",
+    	"email": "bobzzz%tester_com"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+    id: pair_2994119fc4eb493da59c3c5b8ddc4681
+authentication: {}
+metaSortKey: -1622337194344.75
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

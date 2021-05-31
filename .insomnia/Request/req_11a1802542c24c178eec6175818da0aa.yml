@@ -1,0 +1,30 @@
+_id: req_11a1802542c24c178eec6175818da0aa
+type: Request
+parentId: fld_21abb7afc8d54b29a0418fc19b76fd25
+modified: 1622389353506
+created: 1622386721701
+url: "{{ base_url }}/auth/login"
+name: error incorrect password
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+      "email": "bob@tester.com",
+      "password": "string"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+    id: pair_df9841be389a4942bc6cfd0293dcd59b
+authentication: {}
+metaSortKey: -1622340269244.7656
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

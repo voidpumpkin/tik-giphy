@@ -1,0 +1,24 @@
+_id: req_wrk_1c5804cfe6b045949433702a171bcdcddfe076dc
+type: Request
+parentId: fld_2b81c62f66dd4e80a1fbd375dea1c224
+modified: 1622418663225
+created: 1622287768002
+url: "{{ base_url }}/users"
+name: Gets all users
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication:
+  type: bearer
+  token: "{{ _.nevertoken }}"
+  prefix: Bearer
+metaSortKey: -1622287768002
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

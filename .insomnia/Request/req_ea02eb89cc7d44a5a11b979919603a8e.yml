@@ -1,0 +1,30 @@
+_id: req_ea02eb89cc7d44a5a11b979919603a8e
+type: Request
+parentId: fld_21abb7afc8d54b29a0418fc19b76fd25
+modified: 1622388463292
+created: 1622388459516
+url: "{{ base_url }}/auth/login"
+name: error incorect email
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+      "email": "aaaaaaaaaaaaaaaaaaaaaaaa",
+      "password": "string"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+    id: pair_df9841be389a4942bc6cfd0293dcd59b
+authentication: {}
+metaSortKey: -1622355642744.8438
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

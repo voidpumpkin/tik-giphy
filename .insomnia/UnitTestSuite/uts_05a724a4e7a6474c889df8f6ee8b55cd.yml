@@ -1,0 +1,6 @@
+_id: uts_05a724a4e7a6474c889df8f6ee8b55cd
+type: UnitTestSuite
+parentId: wrk_1c5804cfe6b045949433702a171bcdcd
+modified: 1622388002448
+created: 1622388002448
+name: POST /auth/login

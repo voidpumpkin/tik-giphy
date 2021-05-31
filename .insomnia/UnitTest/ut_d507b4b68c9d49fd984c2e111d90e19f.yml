@@ -1,0 +1,13 @@
+_id: ut_d507b4b68c9d49fd984c2e111d90e19f
+type: UnitTest
+parentId: uts_33b4ada2697d41beb97a1cf6d3689d07
+modified: 1622305913124
+created: 1622299036240
+requestId: req_2f28780326144bef80e6bb021cb7d5eb
+name: Returns 409
+code: |-
+  const response = await insomnia.send();
+  const body = JSON.parse(response.data);
+
+  expect(response.status).to.equal(409);
+  expect(body.errors[0].title).to.equal("Specified username already exists");

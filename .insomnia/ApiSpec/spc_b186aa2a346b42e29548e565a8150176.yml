@@ -1,0 +1,160 @@
+_id: spc_b186aa2a346b42e29548e565a8150176
+type: ApiSpec
+parentId: wrk_1c5804cfe6b045949433702a171bcdcd
+modified: 1622421026797
+created: 1622286483831
+fileName: tik-giphy-spec.yaml
+contents: |
+  openapi: 3.0.0
+  info:
+    description: "This is a Tik-Giphy server."
+    version: 0.1.0
+    title: Tik-Giphy API
+    termsOfService: http://swagger.io/terms/
+  tags:
+    - name: users
+      description: Operations about users
+    - name: auth
+      description: Authentication operations
+  paths:
+    /users:
+      get:
+        tags:
+          - users
+        summary: Gets all users
+        operationId: getUsers
+        responses:
+          "200":
+            description: successful operation
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    data:
+                      type: array
+                      items:
+                        type: object
+                        $ref: "#/components/schemas/User"
+          "5XX":
+            description: Unexpected error.
+      post:
+        tags:
+          - users
+        summary: Creates a user
+        requestBody:
+          $ref: "#/components/requestBodies/UserForm"
+        responses:
+          "201":
+            description: successful operation
+          "409":
+            description: username or email already taken
+            content:
+              application/json:
+                schema:
+                  type: object
+                  $ref: "#/components/responseBodies/GeneralErrors"
+          "4XX":
+            description: Error, fixable by user.
+            content:
+              application/json:
+                schema:
+                  type: object
+                  $ref: "#/components/responseBodies/GeneralErrors"
+          "5XX":
+            description: Unexpected error.
+    /auth/login:
+      post:
+        tags:
+          - auth
+        summary: Logs in
+        requestBody:
+          $ref: "#/components/requestBodies/UserForm"
+        responses:
+          "200":
+            description: successful operation
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    data:
+                      type: array
+                      items:
+                        type: object
+                        $ref: "#/components/schemas/LoginData"
+          "4XX":
+            description: Error, fixable by user.
+            content:
+              application/json:
+                schema:
+                  type: object
+                  $ref: "#/components/responseBodies/GeneralErrors"
+          "5XX":
+            description: Unexpected error.
+  components:
+    requestBodies:
+      UserForm:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginReqBody"
+        required: true
+    responseBodies:
+      GeneralErrors:
+        type: object
+        properties:
+          errors:
+            type: array
+            items:
+              type: object
+              $ref: "#/components/schemas/Error"
+    schemas:
+      User:
+        type: object
+        properties:
+          id:
+            type: string
+            format: uuid
+          username:
+            type: string
+          email:
+            type: string
+            format: email
+          password:
+            type: string
+      UserForm:
+        type: object
+        properties:
+          username:
+            type: string
+          email:
+            type: string
+            format: email
+          password:
+            type: string
+      LoginReqBody:
+        type: object
+        properties:
+          email:
+            type: string
+            format: email
+          password:
+            type: string
+      Error:
+        type: object
+        properties:
+          title:
+            type: string
+      LoginData:
+        type: object
+        properties:
+          access_token:
+            type: string
+            format: jwt
+          token_type:
+            type: string
+          expires_in:
+            type: number
+            format: seconds
+contentType: yaml
