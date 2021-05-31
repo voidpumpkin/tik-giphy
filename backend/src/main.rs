@@ -28,7 +28,7 @@ async fn main() -> std::io::Result<()> {
     env_logger::init_from_env(env_logger::Env::new().default_filter_or("INFO"));
 
     let host: String = env::var("BACKEND_HOST").unwrap_or("127.0.0.1:8081".into());
-    let database_url = env::var("DATABASE_URL").expect("Env variable BACKEND_HOST not specified");
+    let database_url = env::var("DATABASE_URL").unwrap();
 
     let manager = ConnectionManager::<PgConnection>::new(database_url);
     let pool = r2d2::Pool::builder()
