@@ -5,6 +5,7 @@ use crate::{
 };
 use actix_threadpool::BlockingError;
 use actix_web::{get, post, web, HttpResponse, Responder, Scope};
+use actix_web_grants::proc_macro::has_permissions;
 use diesel::{
     insert_into,
     result::{DatabaseErrorKind, Error::DatabaseError},
@@ -18,6 +19,7 @@ pub fn users() -> Scope {
 }
 
 #[get("/")]
+#[has_permissions("BASIC")]
 async fn get_users(pool: web::Data<DbPool>) -> impl Responder {
     let db = pool.get().expect("couldn't get db connection from pool");
 

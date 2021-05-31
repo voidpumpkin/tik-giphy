@@ -1,13 +1,17 @@
 #[macro_use]
 extern crate diesel;
+#[macro_use]
+extern crate lazy_static;
 
 use actix_web::{
     middleware::{Logger, NormalizePath},
-    App, HttpServer,
+    web, App, HttpServer,
 };
+use actix_web_httpauth::middleware::HttpAuthentication;
 use diesel::{pg::PgConnection, r2d2::ConnectionManager};
 use std::env;
 
+mod middlewares;
 pub mod models;
 mod resources;
 pub mod schema;
@@ -33,7 +37,11 @@ async fn main() -> std::io::Result<()> {
             .wrap(Logger::default())
             .wrap(NormalizePath::default())
             .service(resources::auth())
-            .service(resources::users())
+            .service(
+                web::scope("")
+                    .wrap(HttpAuthentication::bearer(middlewares::validator))
+                    .service(resources::users()),
+            )
     })
     .bind(host)?
     .run()

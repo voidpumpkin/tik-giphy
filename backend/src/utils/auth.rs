@@ -1,8 +1,13 @@
 use chrono::{Duration, Utc};
-use jsonwebtoken::{EncodingKey, Header};
+use jsonwebtoken::{decode, DecodingKey, EncodingKey, Header, Validation};
 use serde::{Deserialize, Serialize};
-use std::{env, error::Error};
+use std::env;
 use uuid::Uuid;
+
+lazy_static! {
+    pub static ref KEY: String = env::var("PRIVATE_AUTH_KEY").unwrap();
+}
+const EXPIRE_IN: i64 = 60 * 2;
 
 #[derive(Serialize, Deserialize)]
 pub struct TokenClaims {
@@ -12,15 +17,28 @@ pub struct TokenClaims {
     pub exp: i64,
     // subject - user id
     pub sub: Uuid,
+    pub permissions: Vec<String>,
+}
+
+impl TokenClaims {
+    pub fn from_token(token: &str) -> jsonwebtoken::errors::Result<Self> {
+        let token_data = decode::<Self>(
+            &token,
+            &DecodingKey::from_secret(KEY.as_ref()),
+            &Validation::default(),
+        )?;
+        Ok(token_data.claims)
+    }
 }
 
 type Token = String;
 type ExpiresIn = i64;
 
-pub fn generate_token(user_id: Uuid) -> Result<(Token, ExpiresIn), Box<dyn Error>> {
-    let key = env::var("PRIVATE_AUTH_KEY")?;
-
-    let expires_in = Duration::seconds(120);
+pub fn generate_token(
+    user_id: Uuid,
+    permissions: Vec<String>,
+) -> jsonwebtoken::errors::Result<(Token, ExpiresIn)> {
+    let expires_in = Duration::seconds(EXPIRE_IN);
 
     let now = Utc::now();
     let expiration = now + expires_in;
@@ -28,12 +46,13 @@ pub fn generate_token(user_id: Uuid) -> Result<(Token, ExpiresIn), Box<dyn Error
         iat: now.timestamp(),
         exp: expiration.timestamp(),
         sub: user_id,
+        permissions,
     };
 
     let token = jsonwebtoken::encode(
         &Header::default(),
         &claims,
-        &EncodingKey::from_secret(key.as_ref()),
+        &EncodingKey::from_secret(KEY.as_ref()),
     )?;
 
     Ok((token, expires_in.num_seconds()))

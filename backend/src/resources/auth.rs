@@ -81,7 +81,7 @@ async fn login(pool: web::Data<DbPool>, req_body: web::Json<LoginReqBody>) -> im
         _ => {}
     }
 
-    match auth::generate_token(id) {
+    match auth::generate_token(id, vec!["BASIC".to_string()]) {
         Ok((token, expires_in)) => HttpResponse::Ok().json(SuccessfulResBody {
             data: json!({
                 "access_token": token,
