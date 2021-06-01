@@ -1,7 +1,7 @@
 _id: ut_88ffe94f3fcc47d5b9a846541e5b01b7
 type: UnitTest
 parentId: uts_05a724a4e7a6474c889df8f6ee8b55cd
-modified: 1622395904753
+modified: 1622560721069
 created: 1622395711447
 requestId: req_wrk_1c5804cfe6b045949433702a171bcdcd6fee21f0
 name: Returns 200
@@ -11,5 +11,5 @@ code: |-
 
   expect(response1.status).to.equal(200);
   expect(typeof body.data.access_token).to.equal("string");
-  expect(body.data.token_type).to.equal("bearer");
+  expect(body.data.token_type).to.equal("Bearer");
   expect(typeof body.data.expires_in).to.equal("number");
