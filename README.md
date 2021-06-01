@@ -26,6 +26,8 @@ cp example.env .env
 docker-compose -f docker-compose.yml -f docker-compose.prod.yml up
 ```
 
+3. Head to http://localhost:8081
+
 ### Development
 
 1. Create `.env` file, you can use `example.env` for this:
@@ -45,3 +47,5 @@ docker compose up -d
 ```
 cargo cmd dev
 ```
+
+4. Head to http://localhost:8081

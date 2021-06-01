@@ -1,7 +1,11 @@
 #[macro_use]
 extern crate diesel;
 #[macro_use]
+extern crate diesel_migrations;
+#[macro_use]
 extern crate lazy_static;
+
+embed_migrations!();
 
 use actix_web::{
     middleware::{Logger, NormalizePath},
@@ -30,6 +34,9 @@ async fn main() -> std::io::Result<()> {
     let pool = r2d2::Pool::builder()
         .build(manager)
         .expect("Could not build connection pool");
+
+    let connection = pool.get().unwrap();
+    embedded_migrations::run(&connection).unwrap();
 
     HttpServer::new(move || {
         App::new()
