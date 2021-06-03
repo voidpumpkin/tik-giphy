@@ -1,10 +1,14 @@
-use crate::components::{next_button::NextButton, prev_button::PrevButton};
+use crate::components::{
+    next_button::NextButton, prev_button::PrevButton, profile_button::ProfileButton,
+    profile_modal::ProfileModal,
+};
 use yew::prelude::*;
 
 #[derive(Debug)]
 pub struct Ui {
     props: Props,
     link: ComponentLink<Self>,
+    is_profile_open: bool,
 }
 
 #[derive(Properties, Clone, PartialEq, Debug)]
@@ -17,6 +21,7 @@ pub struct Props {
 pub enum Msg {
     NextGif,
     PrevGif,
+    SetProfileOpen(bool),
 }
 
 impl Component for Ui {
@@ -24,7 +29,11 @@ impl Component for Ui {
     type Properties = Props;
 
     fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
-        Self { props, link }
+        Self {
+            props,
+            link,
+            is_profile_open: false,
+        }
     }
 
     fn update(&mut self, msg: Self::Message) -> ShouldRender {
@@ -35,7 +44,10 @@ impl Component for Ui {
             Msg::PrevGif => {
                 self.props.on_set_gif_index.emit(self.props.gif_index - 1);
             }
-        }
+            Msg::SetProfileOpen(val) => {
+                self.is_profile_open = val;
+            }
+        };
         true
     }
 
@@ -51,12 +63,14 @@ impl Component for Ui {
     fn view(&self) -> Html {
         html! {
             <div class="ui">
+                <div class="topRow">
+                    <h1>{"Giphy/Trending"}</h1>
+                    <ProfileButton on_click=self.link.callback(|_| Msg::SetProfileOpen(true)) />
+                    <ProfileModal is_open=self.is_profile_open on_close=self.link.callback(|_| Msg::SetProfileOpen(false))/>
+                </div>
                 <div class="buttons">
                     <PrevButton gif_index=self.props.gif_index onclick=self.link.callback(|_| Msg::PrevGif) />
                     <NextButton gif_index=self.props.gif_index gifs_len=self.props.gifs_len onclick=self.link.callback(|_| Msg::NextGif) />
-                </div>
-                <div class="info">
-                    <h1>{"Giphy/Trending"}</h1>
                 </div>
             </div>
         }

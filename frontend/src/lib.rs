@@ -2,6 +2,7 @@
 
 mod components;
 mod responses;
+mod utils;
 
 use components::app::App;
 use wasm_bindgen::prelude::*;

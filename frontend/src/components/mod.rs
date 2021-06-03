@@ -1,5 +1,9 @@
 pub mod app;
+pub mod close_button;
 pub mod gif;
 pub mod next_button;
 pub mod prev_button;
+pub mod profile_button;
+pub mod profile_icon;
+pub mod profile_modal;
 pub mod ui;
