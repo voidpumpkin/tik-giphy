@@ -1,7 +1,6 @@
 #![recursion_limit = "1024"]
 
 mod components;
-mod responses;
 mod utils;
 
 use components::App;

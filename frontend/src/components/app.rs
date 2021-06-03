@@ -1,13 +1,11 @@
-use crate::{
-    components::{Gif, Ui},
-    responses::gifs_response::GifsResponse,
-};
+use crate::components::{Gif, Ui};
+use serde_json::Value;
 use yew::{
     format::{Json, Nothing},
     prelude::*,
     services::{
         fetch::{FetchTask, Request, Response},
-        FetchService,
+        ConsoleService, FetchService,
     },
 };
 
@@ -20,7 +18,7 @@ pub struct App {
 }
 pub enum Msg {
     SetGifIndex(usize),
-    ReceiveGifsResponse(Result<GifsResponse, anyhow::Error>),
+    ReceiveGifsResponse(Result<Value, anyhow::Error>),
 }
 
 impl App {
@@ -32,14 +30,30 @@ impl App {
         let request = Request::get(request_uri)
             .body(Nothing)
             .expect("Could not build gifs request");
-        let callback = self.link.callback(
-            |response: Response<Json<Result<GifsResponse, anyhow::Error>>>| {
-                let Json(data) = response.into_body();
-                Msg::ReceiveGifsResponse(data)
-            },
-        );
+        let callback =
+            self.link
+                .callback(|response: Response<Json<Result<Value, anyhow::Error>>>| {
+                    let Json(data) = response.into_body();
+                    Msg::ReceiveGifsResponse(data)
+                });
         let task = FetchService::fetch(request, callback).expect("failed to start gifs request");
         self.fetch_task = Some(task);
+    }
+
+    fn unpack_gifs(gifs_response: Value) -> Option<Vec<String>> {
+        let gifs: Vec<String> = match gifs_response["data"].as_array() {
+            Some(val) => val,
+            None => {
+                ConsoleService::info("No gifs were returned");
+                return None;
+            }
+        }
+        .iter()
+        .filter_map(|gif| gif["images"]["original"]["url"].as_str())
+        .map(|gif| gif.to_string())
+        .collect();
+
+        Some(gifs)
     }
 }
 
@@ -65,13 +79,9 @@ impl Component for App {
             }
             Msg::ReceiveGifsResponse(response) => {
                 let gifs_response = response.expect("failed to get gifs");
-                self.gifs.append(
-                    &mut gifs_response
-                        .data
-                        .iter()
-                        .map(|gif| gif.images.original.url.clone())
-                        .collect(),
-                );
+                if let Some(mut gifs) = Self::unpack_gifs(gifs_response) {
+                    self.gifs.append(&mut gifs);
+                }
             }
         }
         true
