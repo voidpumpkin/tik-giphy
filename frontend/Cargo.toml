@@ -10,7 +10,7 @@ dev = "cargo watch -- docker-compose -f ../docker-compose.yml -f ../docker-compo
 serve = "miniserve ./build --index index.html"
 build-and-serve = "cargo cmd build -- --$WASM_PROFILE && cargo cmd serve"
 build = "cargo cmd pre-wasm-build && wasm-pack build --target web --out-name index --out-dir ./build --no-typescript"
-pre-wasm-build = "rm -fr build && mkdir build && cp static/* build"
+pre-wasm-build = "rm -fr build/* && mkdir -p build && cp static/* build"
 
 [lib]
 crate-type = ["cdylib", "rlib"]

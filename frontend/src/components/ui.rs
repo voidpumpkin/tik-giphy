@@ -1,6 +1,5 @@
-use yew::prelude::*;
-
 use crate::components::{next_button::NextButton, prev_button::PrevButton};
+use yew::prelude::*;
 
 #[derive(Debug)]
 pub struct Ui {

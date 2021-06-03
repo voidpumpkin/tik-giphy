@@ -11,11 +11,14 @@ macro_rules! app_config {
             .data($pool)
             .wrap(Logger::default())
             .wrap(NormalizePath::default())
-            .service(web::scope("/auth").service(login))
             .service(
-                web::scope("/users")
-                    .service(post_user)
-                    .service(auth_middleware!().service(get_users)),
+                web::scope("/api")
+                    .service(web::scope("/auth").service(login))
+                    .service(
+                        web::scope("/users")
+                            .service(post_user)
+                            .service(auth_middleware!().service(get_users)),
+                    ),
             )
     }};
 }

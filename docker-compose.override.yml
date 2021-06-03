@@ -1,11 +1,20 @@
 version: "3"
 services:
+  caddy:
+    volumes:
+      - public:/srv
+      - caddyd:/data
+      - caddyc:/config
+      - type: bind
+        source: ./Caddyfile
+        target: /etc/caddy/Caddyfile
   frontend:
     ports:
       - "8080:8080"
     volumes:
       - ./frontend:/usr/src/app
       - fecargo:/usr/local/cargo
+      - public:/usr/src/app/build
   backend:
     ports:
       - "8081:8081"
@@ -16,6 +25,9 @@ services:
     volumes:
       - db:/var/lib/postgresql/data
 volumes:
+  public:
+  caddyd:
+  caddyc:
   fecargo:
   becargo:
   db:

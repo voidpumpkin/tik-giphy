@@ -1,0 +1,14 @@
+(serve) {
+    root * {arg.0}
+    encode zstd gzip
+    file_server
+}
+
+localhost {
+    @api {
+        path /api/*
+        path /api
+    }
+    reverse_proxy @api server:8081
+    import serve /srv
+}
