@@ -1,31 +1,26 @@
 use crate::{
-    models,
-    utils::{auth, DbPool, ErrorResBody, JsonApiError, SuccessfulResBody},
+    constants::{
+        EMAIL, ERROR_MESSAGE_EMAIL_UNIQUE_VIOLATION, ERROR_MESSAGE_USERNAME_UNIQUE_VIOLATION,
+        TITLE, USERNAME,
+    },
+    models::{User, UserInsertTO},
+    services::auth,
+    types::DbPool,
+    views::{ErrorResBody, SuccessfulResBody},
 };
 use actix_threadpool::BlockingError;
 use actix_web::{get, post, web, HttpResponse, Responder};
 use actix_web_grants::proc_macro::has_permissions;
-use diesel::{
-    insert_into,
-    result::{DatabaseErrorKind, Error::DatabaseError},
-    RunQueryDsl,
-};
+use diesel::result::{DatabaseErrorKind, Error::DatabaseError};
 use serde::Deserialize;
+use serde_json::json;
 use validator::Validate;
 
 #[get("/")]
 #[has_permissions("BASIC")]
 pub async fn get_users(pool: web::Data<DbPool>) -> impl Responder {
-    let db = pool.get().expect("couldn't get db connection from pool");
-
-    let users_result = web::block(
-        move || -> Result<Vec<models::User>, diesel::result::Error> {
-            use crate::schema::users::dsl::*;
-            let user = users.load::<models::User>(&db)?;
-            Ok(user)
-        },
-    )
-    .await;
+    let connection = pool.get().unwrap();
+    let users_result = web::block(move || User::get_all(&connection)).await;
 
     match users_result {
         Ok(users) => HttpResponse::Ok().json(SuccessfulResBody { data: users }),
@@ -54,30 +49,11 @@ pub async fn post_user(
     pool: web::Data<DbPool>,
     req_body: web::Json<PostUserReqBody>,
 ) -> impl Responder {
-    let db = pool.get().expect("couldn't get db connection from pool");
-
-    match req_body.validate() {
-        Err(errs) => {
-            let errors: Vec<JsonApiError> = errs
-                .field_errors()
-                .iter()
-                .map(|field_err| {
-                    field_err.1.iter().map(|validation_err| {
-                        let title = match validation_err.clone().message {
-                            Some(message) => message.to_string(),
-                            None => format!("{}", validation_err),
-                        };
-                        JsonApiError { title }
-                    })
-                })
-                .flatten()
-                .collect();
-            return HttpResponse::BadRequest().json(ErrorResBody { errors });
-        }
-        _ => {}
+    if let Err(errors) = req_body.validate() {
+        return HttpResponse::BadRequest().json(ErrorResBody::from(errors));
     }
 
-    let password = match auth::hash(&req_body.0.password) {
+    let password = match auth::hash(&req_body.password) {
         Ok(val) => val,
         Err(err) => {
             eprint!("{}", err);
@@ -85,22 +61,18 @@ pub async fn post_user(
         }
     };
 
-    let new_user = match req_body.0 {
+    let new_user = match req_body.into_inner() {
         PostUserReqBody {
             username, email, ..
-        } => models::UserForm {
+        } => UserInsertTO {
             username,
             email,
             password,
         },
     };
 
-    let insert_result = web::block(move || -> Result<(), diesel::result::Error> {
-        use crate::schema::users::dsl::*;
-        insert_into(users).values(&new_user).execute(&db)?;
-        Ok(())
-    })
-    .await;
+    let connection = pool.get().unwrap();
+    let insert_result = web::block(move || User::insert(&new_user, &connection)).await;
 
     match insert_result {
         Ok(_) => HttpResponse::Created().finish(),
@@ -113,12 +85,12 @@ pub async fn post_user(
                 )) => {
                     let contraint = err_info.message();
                     let mut title = contraint.to_string();
-                    if contraint.contains("username") {
-                        title = "Specified username already exists".into();
-                    } else if contraint.contains("email") {
-                        title = "Specified email already exists".into();
+                    if contraint.contains(USERNAME) {
+                        title = ERROR_MESSAGE_USERNAME_UNIQUE_VIOLATION.into();
+                    } else if contraint.contains(EMAIL) {
+                        title = ERROR_MESSAGE_EMAIL_UNIQUE_VIOLATION.into();
                     }
-                    let errors = vec![JsonApiError { title }];
+                    let errors = vec![json!({ TITLE: title })];
                     HttpResponse::Conflict().json(ErrorResBody { errors })
                 }
                 _ => HttpResponse::InternalServerError().finish(),

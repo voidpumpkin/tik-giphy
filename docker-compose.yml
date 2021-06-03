@@ -16,6 +16,7 @@ services:
       BACKEND_HOST: ${BACKEND_HOST:-"0.0.0.0:8081"}
       DATABASE_URL: postgres://${POSTGRES_USER?}:${POSTGRES_PASSWORD?}@database/${POSTGRES_DB?}
       PRIVATE_AUTH_KEY: ${PRIVATE_AUTH_KEY?}
+      EXPIRE_JWT_BEARER_IN_SEC: ${EXPIRE_JWT_BEARER_IN_SEC}
     depends_on:
       - database
     tty: true

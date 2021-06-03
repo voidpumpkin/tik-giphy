@@ -1,4 +1,4 @@
-use crate::utils::auth::TokenClaims;
+use crate::services::auth::TokenClaims;
 use actix_web::{dev::ServiceRequest, Error};
 use actix_web_grants::permissions::AttachPermissions;
 use actix_web_httpauth::extractors::bearer::BearerAuth;

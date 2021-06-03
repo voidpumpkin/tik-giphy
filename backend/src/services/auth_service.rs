@@ -1,3 +1,7 @@
+use crate::constants::{
+    DEFAULT_ENV_KEY_EXPIRE_JWT_BEARER_IN_SEC, ENV_KEY_EXPIRE_JWT_BEARER_IN_SEC,
+    ENV_KEY_PRIVATE_AUTH_KEY,
+};
 use chrono::{Duration, Utc};
 use jsonwebtoken::{decode, DecodingKey, EncodingKey, Header, Validation};
 use serde::{Deserialize, Serialize};
@@ -5,9 +9,12 @@ use std::env;
 use uuid::Uuid;
 
 lazy_static! {
-    pub static ref KEY: String = env::var("PRIVATE_AUTH_KEY").unwrap();
+    pub static ref KEY: String = env::var(ENV_KEY_PRIVATE_AUTH_KEY).unwrap();
+    pub static ref EXPIRE_IN: i64 = env::var(ENV_KEY_EXPIRE_JWT_BEARER_IN_SEC)
+        .unwrap_or("".into())
+        .parse()
+        .unwrap_or(DEFAULT_ENV_KEY_EXPIRE_JWT_BEARER_IN_SEC);
 }
-const EXPIRE_IN: i64 = 60 * 2;
 
 #[derive(Serialize, Deserialize)]
 pub struct TokenClaims {
@@ -38,7 +45,7 @@ pub fn generate_token(
     user_id: Uuid,
     permissions: Vec<String>,
 ) -> jsonwebtoken::errors::Result<(Token, ExpiresIn)> {
-    let expires_in = Duration::seconds(EXPIRE_IN);
+    let expires_in = Duration::seconds(*EXPIRE_IN);
 
     let now = Utc::now();
     let expiration = now + expires_in;

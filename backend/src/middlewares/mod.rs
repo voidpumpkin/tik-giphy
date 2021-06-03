@@ -1,3 +1,3 @@
-mod auth;
+mod auth_middleware;
 
-pub use auth::validator;
+pub use auth_middleware::validator;

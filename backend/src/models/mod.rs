@@ -1,3 +1,3 @@
-mod user;
+mod user_model;
 
-pub use user::{User, UserForm};
+pub use user_model::{User, UserInsertTO};
