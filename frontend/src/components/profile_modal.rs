@@ -1,5 +1,5 @@
 use crate::{
-    components::{close_button::CloseButton, profile_icon::ProfileIcon},
+    components::{CloseButton, ProfileIcon},
     log,
 };
 use yew::prelude::*;

@@ -1,5 +1,5 @@
 use crate::{
-    components::{gif::Gif, ui::Ui},
+    components::{Gif, Ui},
     responses::gifs_response::GifsResponse,
 };
 use yew::{

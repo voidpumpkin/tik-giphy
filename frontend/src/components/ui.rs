@@ -1,7 +1,4 @@
-use crate::components::{
-    next_button::NextButton, prev_button::PrevButton, profile_button::ProfileButton,
-    profile_modal::ProfileModal,
-};
+use crate::components::{profile_modal::ProfileModal, NextButton, PrevButton, ProfileButton};
 use yew::prelude::*;
 
 #[derive(Debug)]
