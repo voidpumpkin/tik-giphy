@@ -1,5 +1,6 @@
 use crate::components::{profile_modal::ProfileModal, NextButton, PrevButton, ProfileButton};
 use yew::prelude::*;
+use yewtil::NeqAssign;
 
 #[derive(Debug)]
 pub struct Ui {
@@ -49,12 +50,7 @@ impl Component for Ui {
     }
 
     fn change(&mut self, props: Self::Properties) -> ShouldRender {
-        if self.props != props {
-            self.props = props;
-            true
-        } else {
-            false
-        }
+        self.props.neq_assign(props)
     }
 
     fn view(&self) -> Html {

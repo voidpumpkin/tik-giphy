@@ -1,8 +1,6 @@
-use crate::{
-    components::{CloseButton, ProfileIcon},
-    log,
-};
+use crate::components::{CloseButton, ProfileIcon};
 use yew::prelude::*;
+use yewtil::NeqAssign;
 
 #[derive(Debug)]
 pub struct ProfileModal {
@@ -38,13 +36,7 @@ impl Component for ProfileModal {
     }
 
     fn change(&mut self, props: Self::Properties) -> ShouldRender {
-        log!("{:?}", props);
-        if self.props != props {
-            self.props = props;
-            true
-        } else {
-            false
-        }
+        self.props.neq_assign(props)
     }
 
     fn view(&self) -> Html {
