@@ -6,6 +6,7 @@ mod prev_button;
 mod profile_button;
 mod profile_icon;
 mod profile_modal;
+mod sign_in_form;
 mod ui;
 
 pub use app::App;
@@ -16,4 +17,5 @@ pub use prev_button::PrevButton;
 pub use profile_button::ProfileButton;
 pub use profile_icon::ProfileIcon;
 pub use profile_modal::ProfileModal;
+pub use sign_in_form::SignInForm;
 pub use ui::Ui;
