@@ -26,7 +26,7 @@ cp example.env .env
 docker-compose -f docker-compose.yml -f docker-compose.prod.yml up
 ```
 
-3. Head to http://localhost:8081
+3. Head to http://localhost
 
 ### Development
 
@@ -48,4 +48,4 @@ docker compose up -d
 cargo cmd dev
 ```
 
-4. Head to http://localhost:8081
+4. Head to http://localhost

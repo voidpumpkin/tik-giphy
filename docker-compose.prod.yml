@@ -1,19 +1,29 @@
 version: "3"
 services:
+  caddy:
+    volumes:
+      - public:/srv
+      - caddyd:/data
+      - caddyc:/config
+      - type: bind
+        source: ./Caddyfile
+        target: /etc/caddy/Caddyfile
   frontend:
     volumes:
       - fecargo:/usr/local/cargo
+      - public:/usr/src/app/build
     environment:
       WASM_PROFILE: release
   backend:
-    ports:
-      - "8081:8081"
     volumes:
       - becargo:/usr/local/cargo
   database:
     volumes:
       - db:/var/lib/postgresql/data
 volumes:
+  public:
+  caddyd:
+  caddyc:
   fecargo:
   becargo:
   db:
